@@ -9,7 +9,7 @@ data "aws_ami" "amazon-linux-2" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = data.aws_ami.amazon-linux.id
+  ami           = data.aws_ami.amazon-linux-2.id
   instance_type = var.bastion_instance_type
   key_name      = var.ssh_key_name
   subnet_id     = var.subnet_id

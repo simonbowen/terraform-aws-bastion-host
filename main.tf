@@ -13,7 +13,6 @@ resource "aws_instance" "bastion" {
   instance_type = var.bastion_instance_type
   key_name      = var.ssh_key_name
   subnet_id     = var.subnet_id
-  vpc_id        = var.vpc_id
 
   tags = {
     Name = var.bastion_name
@@ -22,30 +21,10 @@ resource "aws_instance" "bastion" {
   security_groups = ["${aws_security_group.allow_ssh_icmp.id}"]
 
 provisioner "file" {
-  source      = "~/ssh/id_rsa"
-  destination = "/ec2-user/home/id_rsa"
+  source      = "~/.ssh/first-key"
+  destination = "/ec2-user/home/first-key"
 
-  connection {
-    host        = "${aws_instance.bastion.public_ip}"
-    user        = "ec2-user"
-    private_key = "${file("~/.ssh/id_rsa")}"
-  }
-
-  provisioner "remote-exec" {
-    inline = ["echo 'CONNECTED to BASTION!'"]
-  }
 }
-
-  connection {
-    bastion_host = "${aws_instance.bastion.public_ip}"
-    host         = "${aws_instance.private.private_ip}"
-    user         = "ec2-user"
-    private_key  = "${file("~/.ssh/id_rsa")}"
-  }
-
-  provisioner "remote-exec" {
-    inline = ["echo 'CONNECTED to PRIVATE!'"]
-  }
 }
 
 resource "aws_security_group" "allow_ssh_icmp" {

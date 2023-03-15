@@ -5,6 +5,12 @@ Usage
 
 To use this module in your Terraform code, you can include the following block:
 
+
+```hcl
+
+provider "aws" {
+  region = "us-east-1"
+}
 module "bastion_host" {
   source      = "git::https://github.com/theaksel/terraform-aws-bastion-host.git"
   vpc_id      = "vpc-12345678"
@@ -14,7 +20,7 @@ module "bastion_host" {
   cidr_block = ["0.0.0.0/0"]
   bastion_name = "bastion-host"
 }
-
+```
 
 Inputs
 

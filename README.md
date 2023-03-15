@@ -1,7 +1,7 @@
 This Terraform module creates a Bastion host in an existing VPC to allow secure remote access to instances in private subnets.
 
 
-Usage
+**Usage**
 
 To use this module in your Terraform code, you can include the following block:
 
@@ -22,7 +22,7 @@ module "bastion_host" {
 }
 ```
 
-Inputs
+**Inputs**
 
 This module accepts the following input variables:
 
@@ -36,12 +36,12 @@ This module accepts the following input variables:
 | bastion_name          | The name of the Bastion Host                                 | string | bastion-host | no       |
 
 
-How It Works
+**How It Works**
 
 This module creates an EC2 instance in the specified subnets using the specified instance type. When EC2 launching, the provisioner takes your key.pem from your local and copy it to the Bastion Host EC2 Instance.
 
 The security group for the instance allows inbound SSH and All ICMP IPV4 traffic from the specified CIDR blocks. Outbound traffic is allowed to all destinations.
 
-Requirements
+**Requirements**
 
 This module requires an existing VPC with at least one public subnet and at least one private subnet. The private subnets must have a route to a NAT gateway or other egress solution to allow outbound traffic from the Bastion host to the internet. You must also have an SSH key pair to use for connecting to the Bastion host. You have to add your key.pem path in the provisioner source.

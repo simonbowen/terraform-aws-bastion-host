@@ -20,14 +20,33 @@ resource "aws_instance" "bastion" {
   }
 
   security_groups = ["${aws_security_group.allow_ssh_icmp.id}"]
+
+provisioner "file" {
+  source      = "~/ssh/id_rsa"
+  destination = "/ec2-user/home/id_rsa"
+
+  connection {
+    host        = "${aws_instance.bastion.public_ip}"
+    user        = "ec2-user"
+    private_key = "${file("~/.ssh/id_rsa")}"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["echo 'CONNECTED to BASTION!'"]
+  }
 }
 
-  provisioner "file" {
-    source      = "/path/to/local/key.pem"
-    destination = "/home/ec2-user/.ssh/key.pem"
+  connection {
+    bastion_host = "${aws_instance.bastion.public_ip}"
+    host         = "${aws_instance.private.private_ip}"
+    user         = "ec2-user"
+    private_key  = "${file("~/.ssh/id_rsa")}"
   }
-  
 
+  provisioner "remote-exec" {
+    inline = ["echo 'CONNECTED to PRIVATE!'"]
+  }
+}
 
 resource "aws_security_group" "allow_ssh_icmp" {
   name        = "allow_ssh_icmp"

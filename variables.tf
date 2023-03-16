@@ -1,6 +1,6 @@
 variable "bastion_name" {
   type        = string
-  default = "bastion-host"
+  default     = "bastion-host"
   description = "The name of the Bastion Host"
 }
 
@@ -8,11 +8,6 @@ variable "bastion_instance_type" {
   type        = string
   default     = "t2.micro"
   description = "The instance type of the Bastion Host"
-}
-
-variable "vpc_id" {
-  type        = string
-  description = "The ID of the VPC"
 }
 
 variable "subnet_id" {
@@ -29,4 +24,9 @@ variable "cidr_block" {
   type        = string
   default     = "0.0.0.0/0"
   description = "The IPv4 CIDR block for the Security Group."
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "The ID of the VPC"
 }

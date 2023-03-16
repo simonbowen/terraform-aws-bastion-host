@@ -1,10 +1,20 @@
 data "aws_ami" "amazon-linux-2" {
-  most_recent      = true
-  owners           = ["amazon"]
+  owners      = ["amazon"]
+  most_recent = true
 
   filter {
     name   = "architecture"
     values = ["x86_64"]
+  }
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm*"]
   }
 }
 
@@ -19,12 +29,6 @@ resource "aws_instance" "bastion" {
   }
 
   security_groups = ["${aws_security_group.allow_ssh_icmp.id}"]
-
-provisioner "file" {
-  source      = "~/.ssh/first-key"
-  destination = "/ec2-user/home/first-key"
-
-}
 }
 
 resource "aws_security_group" "allow_ssh_icmp" {
@@ -33,15 +37,15 @@ resource "aws_security_group" "allow_ssh_icmp" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "SSH from VPC"
-    from_port        = 22       
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = [var.cidr_block]
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.cidr_block]
   }
-  
- ingress {
-    description      = "ALL ICMP IPV4 from VPC"
+
+  ingress {
+    description = "ALL ICMP IPV4 from VPC"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
@@ -49,10 +53,10 @@ resource "aws_security_group" "allow_ssh_icmp" {
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {

@@ -1,4 +1,4 @@
-data "aws_ami" "amazon-linux-2" {
+data "aws_ami" "amazon-linux" {
   owners      = ["amazon"]
   most_recent = true
 
@@ -19,7 +19,7 @@ data "aws_ami" "amazon-linux-2" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = data.aws_ami.amazon-linux-2.id
+  ami           = data.aws_ami.amazon-linux.id
   instance_type = var.bastion_instance_type
   key_name      = var.ssh_key_name
   subnet_id     = var.subnet_id

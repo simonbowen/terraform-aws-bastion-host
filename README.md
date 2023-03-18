@@ -1,4 +1,4 @@
-This Terraform module creates a Bastion host in an existing VPC to allow secure remote access to instances in private subnets.
+This Terraform module creates a Bastion host in an existing VPC and subnet to allow secure remote access to instances in private subnets.
 
 
 Usage

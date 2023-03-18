@@ -1,6 +1,6 @@
 variable "bastion_name" {
   type        = string
-  default     = "bastion-host"
+  default     = "Bastion-Host"
   description = "The name of the Bastion Host"
 }
 

@@ -5,15 +5,17 @@ Usage
 
 To use this module in your Terraform code, you can include the following block:
 
+```
 module "bastion_host" {
   source      = "git::https://github.com/theaksel/terraform-aws-bastion-host.git"
   vpc_id      = "vpc-12345678"
-  subnet_id   = ["subnet-01", "subnet-02"]
+  subnet_id   = "subnet-01"
   ssh_key_name    = "my-ssh-key"
   bastion_instance_type = "t2.micro"
   cidr_block = ["0.0.0.0/0"]
   bastion_name = "bastion-host"
 }
+```
 
 
 Inputs
